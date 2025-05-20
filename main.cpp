@@ -44,5 +44,9 @@ int main() {
     /// std::ifstream fis("date.txt");
     /// for(int i = 0; i < nr2; ++i)
     ///     fis >> v2[i];
+
+    int x;
+    std::cin >> x;
+
     return 0;
 }
