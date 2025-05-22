@@ -25,6 +25,15 @@ int main() {
     Administrator a("X", "Y", "a@a.com", "123", 22);
     a.afiseazaProfil();
 
+    std::cout << "Numele salii: " << sala.getNume() << '\n';
+
+    if (sala.esteLiberaLa("Luni", 10))
+        std::cout << "Sala este libera Luni la 10\n";
+    else
+        std::cout << "Sala este ocupata Luni la 10\n";
+
+    sala.ocupaOra("Luni", 11);
+
     std::cout << "\nApasa Enter pentru a iesi...";
     std::cin.get();
     return 0;
