@@ -4,7 +4,7 @@
 #include "utilizator.h"
 #include <iostream>
 
-class Instructor : public Utilizator {
+class Instructor : virtual public Utilizator {
 public:
 	explicit Instructor(const std::string& nume = "", const std::string& prenume = "",
 			   const std::string& email = "", const std::string& parola = "",

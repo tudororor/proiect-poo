@@ -8,6 +8,7 @@
 #include "abonamentStandard.h"
 #include "abonamentPlus.h"
 #include "abonamentPremium.h"
+#include "instructorAdministrator.h"
 
 int main() {
     // Testare clase de utilizatori
@@ -66,6 +67,9 @@ int main() {
         }
     }
     std::cout << "Discount abonament premium: " << abpr.getDiscountEvenimente() << "%\n";
+
+    InstructorAdministrator ia("Andrei", "Popescu", "ia@studio.com", "1234", 35);
+    ia.afiseazaProfil();
 
     std::cout << "\nApasa Enter pentru a iesi...";
     std::cin.get();
