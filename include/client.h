@@ -6,13 +6,13 @@
 
 class Client : public Utilizator {
 public:
-	Client(const std::string& nume = "", const std::string& prenume = "",
+	explicit Client(const std::string& nume = "", const std::string& prenume = "",
 		   const std::string& email = "", const std::string& parola = "",
 		   unsigned int varsta = 0);
 
 	void afiseazaProfil() const override;
 
-	~Client();
+	~Client() override;
 };
 
 #endif
