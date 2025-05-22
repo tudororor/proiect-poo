@@ -18,7 +18,7 @@ public:
 	virtual ~Abonament();
 
 	// Getteri
-	std::string getDenumire() const;
+	const std::string getDenumire() const;
 	unsigned int getPret() const;
 	unsigned int getNumarCursuri() const;
 

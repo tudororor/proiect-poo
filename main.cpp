@@ -46,23 +46,23 @@ int main() {
 
     AbonamentPlus abp;
     abp.afiseazaDetalii();
-    for (int i = 0; i < 3; ++i) {
+    for (int j = 0; j < 3; ++j) {
         if (abp.poateRezervaSala("Sala Mare")) {
-            std::cout << "Rezervare #" << i + 1 << " permisa\n";
+            std::cout << "Rezervare #" << j + 1 << " permisa\n";
             abp.inregistreazaRezervare("Sala Mare");
         } else {
-            std::cout << "Rezervare #" << i + 1 << " REFUZATA\n";
+            std::cout << "Rezervare #" << j + 1 << " REFUZATA\n";
         }
     }
 
     AbonamentPremium abpr;
     abpr.afiseazaDetalii();
-    for (int i = 0; i < 5; ++i) {
+    for (int k = 0; k < 5; ++k) {
         if (abpr.poateRezervaSala("Sala Mica")) {
-            std::cout << "Rezervare Premium #" << i + 1 << " permisa\n";
+            std::cout << "Rezervare Premium #" << k + 1 << " permisa\n";
             abpr.inregistreazaRezervare("Sala Mica");
         } else {
-            std::cout << "Rezervare Premium #" << i + 1 << " REFUZATA\n";
+            std::cout << "Rezervare Premium #" << k + 1 << " REFUZATA\n";
         }
     }
     std::cout << "Discount abonament premium: " << abpr.getDiscountEvenimente() << "%\n";
