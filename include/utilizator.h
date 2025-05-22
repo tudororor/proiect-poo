@@ -9,7 +9,7 @@ protected:
     unsigned int varsta;
 
 public:
-    explicit Utilizator(const std::string& nume = "", const std::string& prenume = "",
+    Utilizator(const std::string& nume = "", const std::string& prenume = "",
                const std::string& email = "", const std::string& parola = "",
                unsigned int varsta = 0);
 
@@ -18,7 +18,7 @@ public:
 	std::string getNumeComplet() const;
 	unsigned int getVarsta() const;
 
-	virtual ~Utilizator() override;
+	virtual ~Utilizator();
 };
 
 #endif

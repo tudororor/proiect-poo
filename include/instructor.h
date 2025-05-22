@@ -6,13 +6,13 @@
 
 class Instructor : public Utilizator {
 public:
-	Instructor(const std::string& nume = "", const std::string& prenume = "",
+	explicit Instructor(const std::string& nume = "", const std::string& prenume = "",
 			   const std::string& email = "", const std::string& parola = "",
 			   unsigned int varsta = 0);
 
 	void afiseazaProfil() const override;
 
-	~Instructor();
+	~Instructor() override;
 };
 
 #endif
