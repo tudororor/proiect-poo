@@ -14,7 +14,7 @@ private:
 	std::string instructor;
 
 public:
-	Curs(const std::string& stil = "", const std::string& ziSaptamana = "",
+	explicit Curs(const std::string& stil = "", const std::string& ziSaptamana = "",
 		 unsigned int ora = 0, unsigned int durataMinute = 0,
 		 unsigned int capacitateMaxima = 0, const std::string& instructor = "");
 
