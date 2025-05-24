@@ -1,5 +1,13 @@
 [
     {
+        "email": "tudor.205.205@gmail.com",
+        "nume": "Danila",
+        "parola": "tudororor",
+        "prenume": "Tudor-Mihail",
+        "tip": "instructor",
+        "varsta": 19
+    },
+    {
         "email": "3",
         "nume": "1",
         "parola": "4",

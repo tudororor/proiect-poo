@@ -9,9 +9,11 @@
 
 class Meniu {
 private:
-	std::shared_ptr<Utilizator> utilizatorAutentificat; // pointer inteligent către utilizatorul curent
+	std::shared_ptr<Utilizator> utilizatorAutentificat;
 
 public:
+	std::shared_ptr<Utilizator> getUtilizatorAutentificat() const;
+
 	Meniu();
 
 	void ruleaza();
@@ -23,6 +25,8 @@ public:
 	void autentificareUtilizator();
 
 	void stergeUtilizator();
+
+	void delogare();
 
 };
 

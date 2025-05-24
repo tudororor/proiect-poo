@@ -6,7 +6,7 @@ Utilizator::Utilizator(const std::string& nume, const std::string& prenume,
 	: nume(nume), prenume(prenume), email(email), parola(parola), varsta(varsta) {}
 
 std::string Utilizator::getNumeComplet() const {
-	return nume + " " + prenume;
+	return prenume + " " + nume;
 }
 
 unsigned int Utilizator::getVarsta() const {

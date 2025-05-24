@@ -1,0 +1,20 @@
+[
+    {
+        "capacitateMaxima": 20,
+        "durataMinute": 60,
+        "instructor": "2 1",
+        "ora": 19,
+        "persoaneInscrise": 0,
+        "stil": "Hip Hop",
+        "ziSaptamana": "Joi"
+    },
+    {
+        "capacitateMaxima": 25,
+        "durataMinute": 120,
+        "instructor": "2 1",
+        "ora": 20,
+        "persoaneInscrise": 0,
+        "stil": "Open",
+        "ziSaptamana": "Miercuri"
+    }
+]

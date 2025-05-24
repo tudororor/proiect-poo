@@ -1,11 +1,11 @@
 #include "curs.h"
 
-Curs::Curs(const std::string& stil, const std::string& ziSaptamana,
-		   unsigned int ora, unsigned int durataMinute,
-		   unsigned int capacitateMaxima, const std::string& instructor)
-	: stil(stil), ziSaptamana(ziSaptamana), ora(ora),
-	  durataMinute(durataMinute), capacitateMaxima(capacitateMaxima),
-	  instructor(instructor) {}
+Curs::Curs(const std::string& stil, const std::string& zi, unsigned int ora,
+		   unsigned int durata, unsigned int capacitate, const std::string& instructor,
+		   unsigned int inscrisi)
+	: stil(stil), ziSaptamana(zi), ora(ora), durataMinute(durata),
+	  capacitateMaxima(capacitate), instructor(instructor),
+	  persoaneInscrise(inscrisi) {}
 
 Curs::~Curs() {}
 
@@ -35,3 +35,41 @@ std::istream& operator>>(std::istream& is, Curs& curs) {
 
 	return is;
 }
+
+std::string Curs::getStil() const {
+	return stil;
+}
+
+std::string Curs::getZi() const {
+	return ziSaptamana;
+}
+
+unsigned int Curs::getOra() const {
+	return ora;
+}
+
+unsigned int Curs::getDurata() const {
+	return durataMinute;
+}
+
+unsigned int Curs::getCapacitate() const {
+	return capacitateMaxima;
+}
+
+std::string Curs::getInstructor() const {
+	return instructor;
+}
+
+unsigned int Curs::getPersoaneInscrise() const {
+	return persoaneInscrise;
+}
+
+void Curs::setPersoaneInscrise(unsigned int nr) {
+	persoaneInscrise = nr;
+}
+
+void Curs::adaugaInscris() {
+	if (persoaneInscrise < capacitateMaxima)
+		++persoaneInscrise;
+}
+
