@@ -1,15 +1,23 @@
 #include "../include/meniu.h"
 #include "../include/meniuInstructor.h"
+#include "../include/meniuClient.h"
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <string>
 #include <cstdlib>
 
+#include "meniuClient.h"
+
 using json = nlohmann::json;
 
 void curataConsola() {
+#ifdef _WIN32
 	system("cls");
+#else
+	system("clear");
+#endif
+
 }
 
 Meniu::Meniu() = default;
@@ -76,6 +84,14 @@ void Meniu::inregistrareUtilizator() {
 	std::cout << "Varsta: ";
 	std::cin >> varsta;
 
+	double sumaInitiala;
+	std::cout << "Introdu suma initiala din cont (lei): ";
+	std::cin >> sumaInitiala;
+	std::cin.ignore();
+
+	auto client = std::make_shared<Client>(nume, prenume, email, parola, varsta);
+	client->adaugaBani(sumaInitiala);
+
 	int tipProfil = 0;
 	std::string tipProfilText;
 
@@ -113,14 +129,17 @@ void Meniu::inregistrareUtilizator() {
 		}
 	}
 
-	json utilizatorNou = {
-		{"nume", nume},
-		{"prenume", prenume},
+	nlohmann::json utilizatorNou = {
+		{"tip", tipProfilText},
 		{"email", email},
 		{"parola", parola},
+		{"nume", nume},
+		{"prenume", prenume},
 		{"varsta", varsta},
-		{"tip", tipProfilText}
+		{"bani", client->getBani()},
+		{"nrSedinte", client->getNrSedinte()}
 	};
+
 
 	j.push_back(utilizatorNou);
 
@@ -168,12 +187,19 @@ void Meniu::autentificareUtilizator() {
             std::string nume = utilizatorJson["nume"];
             std::string prenume = utilizatorJson["prenume"];
 
-            if (tip == "client") {
-                utilizatorAutentificat = std::make_shared<Client>(nume, prenume, email, parola);
-                // TODO: MeniuClient meniu; meniu.meniuClient();
-                std::cout << "Autentificat ca client (meniu in lucru).\n";
+        	if (tip == "client") {
+        		unsigned int varsta = utilizatorJson["varsta"];
+        		double bani = utilizatorJson["bani"];
 
-            } else if (tip == "instructor") {
+        		auto client = std::make_shared<Client>(nume, prenume, email, parola, varsta);
+        		client->adaugaBani(bani);
+
+        		utilizatorAutentificat = client;
+        		MeniuClient meniu(client);
+        		meniu.meniuClient();
+        	}
+
+        	else if (tip == "instructor") {
             	utilizatorAutentificat = std::make_shared<Instructor>(nume, prenume, email, parola);
             	MeniuInstructor meniu(utilizatorAutentificat);
             	meniu.meniuInstructor();
@@ -196,71 +222,103 @@ void Meniu::autentificareUtilizator() {
 }
 
 void Meniu::stergeUtilizator() {
-	std::cout << "----- STERGERE CONT -----\n\n";
+    std::cout << "----- STERGERE CONT -----\n\n";
 
-	std::string email, parola;
-	std::cout << "Introdu emailul contului de sters: ";
-	std::getline(std::cin >> std::ws, email);
-	std::cout << "Introdu parola: ";
-	std::getline(std::cin >> std::ws, parola);
+    std::string email, parola;
+    std::cout << "Introdu emailul contului de sters: ";
+    std::getline(std::cin >> std::ws, email);
+    std::cout << "Introdu parola: ";
+    std::getline(std::cin >> std::ws, parola);
 
-	std::string path = "../utilizatori.json";
-	json j;
+    std::string path = "../utilizatori.json";
+    json j;
 
-	std::ifstream in(path);
-	if (!in.is_open()) {
-		std::cerr << "Eroare: nu pot deschide fisierul pentru citire.\n";
-		std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
-		std::cin.get();
-		return;
-	}
-	in >> j;
-	in.close();
+    std::ifstream in(path);
+    if (!in.is_open()) {
+        std::cerr << "Eroare: nu pot deschide fisierul pentru citire.\n";
+        std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
+        std::cin.get();
+        return;
+    }
+    in >> j;
+    in.close();
 
-	bool gasit = false;
-	json rezultatNou = json::array();
+    bool gasit = false;
+    json rezultatNou = json::array();
+    json utilizatorDeSters;
 
-	for (const auto& user : j) {
-		if (user["email"] == email && user["parola"] == parola) {
-			gasit = true; // nu-l adăugăm => va fi șters
-		} else {
-			rezultatNou.push_back(user);
-		}
-	}
+    for (const auto& user : j) {
+        if (user["email"] == email && user["parola"] == parola) {
+            gasit = true;
+            utilizatorDeSters = user;
+        } else {
+            rezultatNou.push_back(user);
+        }
+    }
 
-	if (!gasit) {
-		std::cout << "Email sau parola incorecta. Stergerea a fost anulata.\n";
-		std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
-		std::cin.get();
-		return;
-	}
+    if (!gasit) {
+        std::cout << "Email sau parola incorecta. Stergerea a fost anulata.\n";
+        std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
+        std::cin.get();
+        return;
+    }
 
-	char confirmare;
-	std::cout << "Esti sigur ca vrei sa stergi contul? (y/n): ";
-	std::cin >> confirmare;
-	std::cin.ignore();
+    char confirmare;
+    std::cout << "Esti sigur ca vrei sa stergi contul? (y/n): ";
+    std::cin >> confirmare;
+    std::cin.ignore();
 
-	if (confirmare != 'y' && confirmare != 'Y') {
-		std::cout << "Stergerea a fost anulata.\n";
-		std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
-		std::cin.get();
-		return;
-	}
+    if (confirmare != 'y' && confirmare != 'Y') {
+        std::cout << "Stergerea a fost anulata.\n";
+        std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
+        std::cin.get();
+        return;
+    }
 
-	std::ofstream out(path);
-	if (!out.is_open()) {
-		std::cerr << "Eroare: nu pot deschide fisierul pentru scriere.\n";
-		std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
-		std::cin.get();
-		return;
-	}
-	out << std::setw(4) << rezultatNou;
-	out.close();
+    // Dacă e instructor, ștergem și cursurile asociate lui
+    if (utilizatorDeSters["tip"] == "instructor" || utilizatorDeSters["tip"] == "instructor_administrator") {
+        std::ifstream fin("../cursuri.json");
+        if (fin.is_open()) {
+            json jCursuri;
+            fin >> jCursuri;
+            fin.close();
 
-	std::cout << "Utilizator sters cu succes.\n";
-	std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
-	std::cin.get();
+            std::string numeComplet = utilizatorDeSters["prenume"].get<std::string>() + " " +
+                                      utilizatorDeSters["nume"].get<std::string>();
+
+            json jNou = json::array();
+            for (const auto& curs : jCursuri) {
+                if (curs["instructor"] != numeComplet) {
+                    jNou.push_back(curs);
+                }
+            }
+
+            std::ofstream fout("../cursuri.json");
+            if (fout.is_open()) {
+                fout << std::setw(4) << jNou;
+                fout.close();
+            } else {
+                std::cerr << "Eroare la scrierea in cursuri.json!\n";
+            }
+        }
+    }
+
+    // Suprascriem fisierul utilizatori.json fără utilizatorul de șters
+    std::ofstream out(path);
+    if (!out.is_open()) {
+        std::cerr << "Eroare: nu pot deschide fisierul pentru scriere.\n";
+        std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
+        std::cin.get();
+        return;
+    }
+    out << std::setw(4) << rezultatNou;
+    out.close();
+
+    std::cout << "Utilizator sters cu succes.\n";
+    std::cout << "\nApasa Enter pentru a te intoarce la meniul principal...";
+    std::cin.get();
 }
+
 
 void Meniu::delogare() {
 	utilizatorAutentificat = nullptr;

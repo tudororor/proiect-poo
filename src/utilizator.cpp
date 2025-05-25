@@ -13,6 +13,18 @@ unsigned int Utilizator::getVarsta() const {
 	return varsta;
 }
 
+unsigned int Utilizator::getNrSedinte() const {
+	return nrSedinte;
+}
+
+void Utilizator::scadeSedinta() {
+	if (nrSedinte > 0) nrSedinte--;
+}
+
+std::string Utilizator::getEmail() const {
+	return email;
+}
+
 Utilizator::~Utilizator() {
 }
 

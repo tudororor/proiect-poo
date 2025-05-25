@@ -25,6 +25,7 @@ public:
 	void setPersoaneInscrise(unsigned int nr);
 	void adaugaInscris(); // incrementează cu 1
 
+
 	explicit Curs(const std::string& stil, const std::string& zi, unsigned int ora,
 	 unsigned int durata, unsigned int capacitate, const std::string& instructor,
 	 unsigned int inscrisi = 0);

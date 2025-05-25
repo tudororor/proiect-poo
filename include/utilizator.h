@@ -6,7 +6,8 @@
 class Utilizator {
 protected:
     std::string nume, prenume, email, parola;
-    unsigned int varsta;
+    unsigned int varsta, nrSedinte = 0;
+
 
 public:
     Utilizator(const std::string& nume = "", const std::string& prenume = "",
@@ -17,6 +18,10 @@ public:
 
 	std::string getNumeComplet() const;
 	unsigned int getVarsta() const;
+
+	unsigned int getNrSedinte() const;
+	void scadeSedinta();
+	std::string getEmail() const;
 
 	virtual ~Utilizator();
 };

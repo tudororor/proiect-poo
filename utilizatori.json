@@ -1,18 +1,12 @@
 [
     {
+        "bani": 500.0,
         "email": "tudor.205.205@gmail.com",
+        "nrSedinte": 0,
         "nume": "Danila",
         "parola": "tudororor",
         "prenume": "Tudor-Mihail",
-        "tip": "instructor",
+        "tip": "client",
         "varsta": 19
-    },
-    {
-        "email": "3",
-        "nume": "1",
-        "parola": "4",
-        "prenume": "2",
-        "tip": "instructor",
-        "varsta": 5
     }
 ]

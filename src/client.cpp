@@ -9,5 +9,21 @@ void Client::afiseazaProfil() const {
 	std::cout << "Client: " << getNumeComplet() << ", " << getVarsta() << " ani\n";
 }
 
+double Client::getBani() const {
+	return bani;
+}
+
+void Client::adaugaBani(double suma) {
+	bani += suma;
+}
+
+bool Client::scadeBani(double suma) {
+	if (bani >= suma) {
+		bani -= suma;
+		return true;
+	}
+	return false;
+}
+
 Client::~Client() {
 }
