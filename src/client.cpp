@@ -11,27 +11,23 @@ Client::Client(const std::string& nume, const std::string& prenume,
 			   unsigned int varsta, double bani, unsigned int nrSedinte)
 		: Utilizator(nume, prenume, email, parola, varsta), bani(bani), nrSedinte(nrSedinte) {}
 
-// Constructor de copiere
 Client::Client(const Client& other)
 		: Utilizator(other), bani(other.bani), nrSedinte(other.nrSedinte) {}
 
-// Operator de atribuire
 Client& Client::operator=(const Client& other) {
 	if (this != &other) {
-		Utilizator::operator=(other); // apel la operator= din baza
+		Utilizator::operator=(other);
 		bani = other.bani;
 		nrSedinte = other.nrSedinte;
 	}
 	return *this;
 }
 
-// Operator += pentru bani
 Client& Client::operator+=(double suma) {
 	bani += suma;
 	return *this;
 }
 
-// Destructor
 Client::~Client() = default;
 
 double Client::getBani() const {
@@ -65,7 +61,6 @@ void Client::afiseazaProfil() const {
 			  << "Sedinte ramase: " << nrSedinte << "\n";
 }
 
-// Operator == (non-membru)
 bool operator==(const Client& c1, const Client& c2) {
-	return c1.email == c2.email;  // comparație logică
+	return c1.email == c2.email;
 }

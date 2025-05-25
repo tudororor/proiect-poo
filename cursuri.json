@@ -1,20 +1,128 @@
 [
     {
-        "capacitateMaxima": 20,
+        "capacitateMaxima": 30,
         "durataMinute": 60,
-        "instructor": "2 1",
+        "instructor": "Simona Mereu",
         "ora": 19,
         "persoaneInscrise": 0,
-        "stil": "Hip Hop",
+        "stil": "Dancehall",
+        "ziSaptamana": "Marti"
+    },
+    {
+        "capacitateMaxima": 30,
+        "durataMinute": 60,
+        "instructor": "Simona Mereu",
+        "ora": 19,
+        "persoaneInscrise": 0,
+        "stil": "Dancehall",
         "ziSaptamana": "Joi"
     },
     {
         "capacitateMaxima": 25,
-        "durataMinute": 120,
-        "instructor": "2 1",
+        "durataMinute": 90,
+        "instructor": "Ioana Bursuc",
+        "ora": 18,
+        "persoaneInscrise": 0,
+        "stil": "Balet",
+        "ziSaptamana": "Luni"
+    },
+    {
+        "capacitateMaxima": 20,
+        "durataMinute": 60,
+        "instructor": "Ioana Bursuc",
         "ora": 20,
         "persoaneInscrise": 0,
-        "stil": "Open",
+        "stil": "Contemporary",
         "ziSaptamana": "Miercuri"
+    },
+    {
+        "capacitateMaxima": 15,
+        "durataMinute": 45,
+        "instructor": "George Cojocaru",
+        "ora": 17,
+        "persoaneInscrise": 0,
+        "stil": "Hip-Hop",
+        "ziSaptamana": "Vineri"
+    },
+    {
+        "capacitateMaxima": 15,
+        "durataMinute": 60,
+        "instructor": "George Cojocaru",
+        "ora": 15,
+        "persoaneInscrise": 0,
+        "stil": "Hip-Hop",
+        "ziSaptamana": "Luni"
+    },
+    {
+        "capacitateMaxima": 20,
+        "durataMinute": 90,
+        "instructor": "Roxana Iacob",
+        "ora": 18,
+        "persoaneInscrise": 0,
+        "stil": "Balet Clasic",
+        "ziSaptamana": "Marti"
+    },
+    {
+        "capacitateMaxima": 25,
+        "durataMinute": 60,
+        "instructor": "Roxana Iacob",
+        "ora": 16,
+        "persoaneInscrise": 0,
+        "stil": "Jazz Funk",
+        "ziSaptamana": "Joi"
+    },
+    {
+        "capacitateMaxima": 30,
+        "durataMinute": 60,
+        "instructor": "Oana Barbu",
+        "ora": 19,
+        "persoaneInscrise": 0,
+        "stil": "Zumba",
+        "ziSaptamana": "Luni"
+    },
+    {
+        "capacitateMaxima": 30,
+        "durataMinute": 60,
+        "instructor": "Oana Barbu",
+        "ora": 20,
+        "persoaneInscrise": 0,
+        "stil": "Zumba",
+        "ziSaptamana": "Miercuri"
+    },
+    {
+        "capacitateMaxima": 18,
+        "durataMinute": 75,
+        "instructor": "Silviu Enache",
+        "ora": 17,
+        "persoaneInscrise": 0,
+        "stil": "Street Dance",
+        "ziSaptamana": "Vineri"
+    },
+    {
+        "capacitateMaxima": 20,
+        "durataMinute": 60,
+        "instructor": "Silviu Enache",
+        "ora": 18,
+        "persoaneInscrise": 0,
+        "stil": "Afro Fusion",
+        "ziSaptamana": "Sambata"
+    },
+    {
+        "capacitateMaxima": 20,
+        "durataMinute": 60,
+        "instructor": "Simona Mereu",
+        "ora": 14,
+        "persoaneInscrise": 0,
+        "stil": "Dancehall",
+        "ziSaptamana": "Duminica"
+    },
+    {
+        "capacitateMaxima": 30,
+        "durataMinute": 90,
+        "instructor": "Roxana Iacob",
+        "ora": 13,
+        "persoaneInscrise": 0,
+        "stil": "Balet Modern",
+        "ziSaptamana": "Duminica"
     }
 ]

@@ -1,18 +1,162 @@
 [
     {
-        "emailClient": "t",
-        "instructor": "2 1",
+        "emailClient": "pop@ion.ro",
+        "instructor": "Simona Mereu",
+        "ora": 17,
+        "stil": "Dancehall",
+        "tip": "curs",
+        "zi": "Sambata"
+    },
+    {
+        "emailClient": "pop@ion.ro",
+        "instructor": "Simona Mereu",
+        "ora": 19,
+        "stil": "Dancehall",
+        "tip": "curs",
+        "zi": "Marti"
+    },
+    {
+        "emailClient": "pop@ion.ro",
+        "instructor": "Roxana Iacob",
+        "ora": 13,
+        "stil": "Balet Modern",
+        "tip": "curs",
+        "zi": "Duminica"
+    },
+    {
+        "emailClient": "pop@ion.ro",
+        "instructor": "George Cojocaru",
+        "ora": 17,
+        "stil": "Hip-Hop",
+        "tip": "curs",
+        "zi": "Vineri"
+    },
+    {
+        "emailClient": "pop@ion.ro",
+        "instructor": "Oana Barbu",
+        "ora": 19,
+        "stil": "Zumba",
+        "tip": "curs",
+        "zi": "Luni"
+    },
+    {
+        "emailClient": "dana.sandu@gmail.com",
+        "instructor": "Ioana Bursuc",
+        "ora": 18,
+        "stil": "Balet",
+        "tip": "curs",
+        "zi": "Luni"
+    },
+    {
+        "emailClient": "dana.sandu@gmail.com",
+        "instructor": "Simona Mereu",
+        "ora": 14,
+        "stil": "Dancehall",
+        "tip": "curs",
+        "zi": "Duminica"
+    },
+    {
+        "emailClient": "dana.sandu@gmail.com",
+        "instructor": "George Cojocaru",
+        "ora": 15,
+        "stil": "Hip-Hop",
+        "tip": "curs",
+        "zi": "Luni"
+    },
+    {
+        "emailClient": "dana.sandu@gmail.com",
+        "instructor": "Silviu Enache",
+        "ora": 17,
+        "stil": "Street Dance",
+        "tip": "curs",
+        "zi": "Vineri"
+    },
+    {
+        "emailClient": "dana.sandu@gmail.com",
+        "instructor": "Roxana Iacob",
+        "ora": 16,
+        "stil": "Jazz Funk",
+        "tip": "curs",
+        "zi": "Joi"
+    },
+    {
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Ioana Bursuc",
         "ora": 20,
-        "stil": "Open",
+        "stil": "Contemporary",
         "tip": "curs",
         "zi": "Miercuri"
     },
     {
-        "emailClient": "tudor.205.205@gmail.com",
-        "instructor": "2 1",
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Oana Barbu",
         "ora": 20,
-        "stil": "Open",
+        "stil": "Zumba",
         "tip": "curs",
         "zi": "Miercuri"
+    },
+    {
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Simona Mereu",
+        "ora": 19,
+        "stil": "Dancehall",
+        "tip": "curs",
+        "zi": "Joi"
+    },
+    {
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Roxana Iacob",
+        "ora": 18,
+        "stil": "Balet Clasic",
+        "tip": "curs",
+        "zi": "Marti"
+    },
+    {
+        "emailClient": "pop@ion.ro",
+        "instructor": "Simona Mereu",
+        "ora": 19,
+        "stil": "Dancehall",
+        "tip": "curs",
+        "zi": "Joi"
+    },
+    {
+        "emailClient": "dana.sandu@gmail.com",
+        "instructor": "George Cojocaru",
+        "ora": 17,
+        "stil": "Hip-Hop",
+        "tip": "curs",
+        "zi": "Vineri"
+    },
+    {
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Oana Barbu",
+        "ora": 19,
+        "stil": "Zumba",
+        "tip": "curs",
+        "zi": "Luni"
+    },
+    {
+        "emailClient": "pop@ion.ro",
+        "instructor": "Ioana Bursuc",
+        "ora": 18,
+        "stil": "Balet",
+        "tip": "curs",
+        "zi": "Luni"
+    },
+    {
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Roxana Iacob",
+        "ora": 13,
+        "stil": "Balet Modern",
+        "tip": "curs",
+        "zi": "Duminica"
+    },
+    {
+        "emailClient": "maria.popa@yahoo.com",
+        "instructor": "Roxana Iacob",
+        "ora": 16,
+        "stil": "Jazz Funk",
+        "tip": "curs",
+        "zi": "Joi"
     }
 ]

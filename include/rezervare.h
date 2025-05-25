@@ -13,11 +13,9 @@ private:
 	std::string numeClient;
 
 public:
-	// Constructor detaliat
 	Rezervare(const T& obiect, const std::string& zi, unsigned int ora, const std::string& numeClient)
 		: obiect(obiect), zi(zi), ora(ora), numeClient(numeClient) {}
 
-	// Constructor simplificat (folosit în meniuClient)
 	Rezervare(const std::string& numeClient, const T& obiect)
 		: obiect(obiect), numeClient(numeClient) {
 		zi = obiect.getZi();

@@ -10,7 +10,6 @@ private:
 	unsigned int nrSedinte = 0;
 
 public:
-	// Constructori
 	explicit Client(const std::string& nume = "", const std::string& prenume = "",
 					const std::string& email = "", const std::string& parola = "",
 					unsigned int varsta = 0);
@@ -19,19 +18,14 @@ public:
 		   const std::string& email, const std::string& parola,
 		   unsigned int varsta, double bani, unsigned int nrSedinte);
 
-	// Constructor de copiere
 	Client(const Client& other);
 
-	// Operator de atribuire
 	Client& operator=(const Client& other);
 
-	// Operator += (membru)
 	Client& operator+=(double suma);
 
-	// Destructor
 	~Client() override;
 
-	// Getteri / Setteri
 	double getBani() const;
 	void adaugaBani(double suma);
 	void scadeBani(double suma);
@@ -41,7 +35,6 @@ public:
 
 	void afiseazaProfil() const override;
 
-	// Prietenie pentru operator ==
 	friend bool operator==(const Client& c1, const Client& c2);
 };
 

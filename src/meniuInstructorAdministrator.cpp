@@ -16,7 +16,7 @@ void MeniuInstructorAdministrator::meniuInstructorAdministrator() {
     int optiune;
     do {
         clearScreen();
-        std::cout << "--- MENIU INSTRUCTOR + ADMIN ---\n\n";
+        std::cout << "--- MENIU INSTRUCTOR-ADMINISTRATOR ---\n\n";
         std::cout << "1. Creeaza curs\n";
         std::cout << "2. Sterge curs\n";
         std::cout << "3. Afiseaza cursuri proprii\n";
@@ -49,8 +49,6 @@ void MeniuInstructorAdministrator::meniuInstructorAdministrator() {
 
     } while (true);
 }
-
-// ========== Instructor ==========
 
 void MeniuInstructorAdministrator::adaugaCurs() {
     std::string stil, zi;
@@ -236,20 +234,16 @@ void MeniuInstructorAdministrator::stergeCont() {
 
     if (confirmare != 'y' && confirmare != 'Y') {
         std::cout << "Stergerea a fost anulata.\n";
-        std::cout << "\nApasa ENTER pentru a reveni in meniu...";
         std::cin.ignore();
-        std::cin.get();
         return;
     }
 
-    // Sterge din vector
     auto it = std::remove_if(utilizatori.begin(), utilizatori.end(),
         [&](const std::shared_ptr<Utilizator>& u) {
             return u->getEmail() == email;
         });
     utilizatori.erase(it, utilizatori.end());
 
-    // Stergere din utilizatori.json
     std::ifstream in("../utilizatori.json");
     json j;
     in >> j;
@@ -292,8 +286,6 @@ void MeniuInstructorAdministrator::stergeCont() {
     std::cin.get();
 }
 
-// ========== Administrator ==========
-
 void MeniuInstructorAdministrator::afiseazaUtilizatorDetaliat() {
     std::string email;
     std::cout << "Email: ";
@@ -304,16 +296,12 @@ void MeniuInstructorAdministrator::afiseazaUtilizatorDetaliat() {
             std::cout << "\nProfil gasit!\n";
             u->afiseazaProfil();
 
-            std::cout << "\nApasa Enter pentru a continua...";
             std::cin.ignore();
-            std::cin.get();
             return;
         }
     }
 
     std::cout << "Contul nu a fost gasit.\n";
-    std::cout << "\nApasa Enter pentru a continua...";
-    std::cin.ignore();
     std::cin.get();
 }
 
@@ -331,9 +319,7 @@ void MeniuInstructorAdministrator::stergeAltUtilizator() {
 
     if (it == utilizatori.end()) {
         std::cout << "Email sau parola incorecta.\n";
-        std::cout << "\nApasa Enter pentru a continua...";
         std::cin.ignore();
-        std::cin.get();
         return;
     }
 
@@ -343,9 +329,7 @@ void MeniuInstructorAdministrator::stergeAltUtilizator() {
 
     if (confirmare != 'y' && confirmare != 'Y') {
         std::cout << "Stergerea a fost anulata.\n";
-        std::cout << "\nApasa Enter pentru a continua...";
         std::cin.ignore();
-        std::cin.get();
         return;
     }
 
@@ -367,7 +351,5 @@ void MeniuInstructorAdministrator::stergeAltUtilizator() {
     out.close();
 
     std::cout << "Utilizatorul a fost sters cu succes.\n";
-    std::cout << "\nApasa Enter pentru a continua...";
     std::cin.ignore();
-    std::cin.get();
 }

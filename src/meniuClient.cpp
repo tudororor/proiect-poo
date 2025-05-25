@@ -23,7 +23,7 @@ void MeniuClient::meniuClient() {
         std::cout << "2. Vezi rezervarile\n";
         std::cout << "3. Anuleaza rezervare\n";
         std::cout << "4. Cumpara sedinte\n";
-        std::cout << "5. Sterge contul meu\n";  // NOU
+        std::cout << "5. Sterge contul meu\n";
         std::cout << "6. Delogare\n\n";
         std::cout << "Alege o optiune: ";
         std::cin >> optiune;
@@ -37,7 +37,7 @@ void MeniuClient::meniuClient() {
         else if (optiune == 4) cumparaSedinte();
         else if (optiune == 5) {
             stergeCont();
-            return;  // dupa stergere te intoarce la meniu principal
+            return;
         }
         else if (optiune == 6) {
             std::cout << "Delogare cu succes.\n";
@@ -117,7 +117,6 @@ void MeniuClient::rezervaCurs() {
 
     const auto& cursAles = cursuri[index - 1];
 
-    // === Verificăm dacă a fost deja rezervat ===
     std::ifstream rezervariIn("../rezervari.json");
     nlohmann::json jRez;
     if (rezervariIn.is_open()) {
@@ -142,7 +141,6 @@ void MeniuClient::rezervaCurs() {
         }
     }
 
-    // === Daca nu s-a rezervat inca, continuam ===
     client->scadeSedinta();
 
     nlohmann::json rezervareNoua = {
@@ -207,7 +205,6 @@ void MeniuClient::afiseazaRezervari() {
         return;
     }
 
-    // sortare după zi + oră
     std::map<std::string, int> zile = {
         {"Luni", 0}, {"Marti", 1}, {"Miercuri", 2},
         {"Joi", 3}, {"Vineri", 4}, {"Sambata", 5}, {"Duminica", 6}
@@ -236,7 +233,6 @@ void MeniuClient::anuleazaRezervare() {
         return;
     }
 
-    // === Citim rezervările ===
     std::ifstream in("../rezervari.json");
     nlohmann::json jRez;
     try {
@@ -247,7 +243,6 @@ void MeniuClient::anuleazaRezervare() {
     }
     in.close();
 
-    // === Filtrăm rezervările clientului ===
     std::vector<nlohmann::json> rezervariClient;
     for (const auto& r : jRez) {
         if (r.contains("emailClient") && r["emailClient"] == client->getEmail()) {
@@ -260,7 +255,6 @@ void MeniuClient::anuleazaRezervare() {
         return;
     }
 
-    // === Afișăm rezervările ===
     std::cout << "----- REZERVARILE TALE -----\n\n";
     for (size_t i = 0; i < rezervariClient.size(); ++i) {
         const auto& r = rezervariClient[i];
@@ -277,19 +271,16 @@ void MeniuClient::anuleazaRezervare() {
         return;
     }
 
-    // === Căutăm și ștergem rezervarea ===
     const auto& rezervareDeSters = rezervariClient[index - 1];
     auto it = std::remove_if(jRez.begin(), jRez.end(), [&](const auto& r) {
         return r == rezervareDeSters;
     });
     jRez.erase(it, jRez.end());
 
-    // === Salvăm noul fișier ===
     std::ofstream out("../rezervari.json");
     out << std::setw(4) << jRez;
     out.close();
 
-    // === Adăugăm o ședință înapoi ===
     client->adaugaSedinte(1);
     std::ifstream userIn("../utilizatori.json");
     nlohmann::json jUtil;
@@ -367,7 +358,6 @@ void MeniuClient::stergeCont() {
         return;
     }
 
-    // Stergere din utilizatori.json
     std::ifstream in("../utilizatori.json");
     if (!in.is_open()) {
         std::cerr << "Eroare la deschiderea utilizatori.json\n";

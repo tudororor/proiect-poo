@@ -16,7 +16,7 @@ void MeniuInstructor::meniuInstructor() {
         std::cout << "1. Creeaza curs\n";
         std::cout << "2. Sterge curs\n";
         std::cout << "3. Afiseaza cursuri\n";
-        std::cout << "4. Sterge contul meu\n";  // NOU
+        std::cout << "4. Sterge contul meu\n";
         std::cout << "5. Delogare\n\n";
         std::cout << "Alege o optiune: ";
         std::cin >> optiune;
@@ -29,7 +29,7 @@ void MeniuInstructor::meniuInstructor() {
         else if (optiune == 3) afiseazaCursuriCreate();
         else if (optiune == 4) {
             stergeCont();
-            return;  // revine la meniul principal
+            return;
         }
         else if (optiune == 5) {
             std::cout << "Delogare cu succes.\n";
@@ -82,23 +82,21 @@ void MeniuInstructor::adaugaCurs() {
     Curs nouCurs(stil, zi, ora, durata, capacitate, numeInstructor);
     cursuriCreate.push_back(nouCurs);
 
-    // === Citire din cursuri.json existente ===
     nlohmann::json j;
 
     std::ifstream in("../cursuri.json");
     if (in.is_open()) {
         try {
             in >> j;
-            if (!j.is_array()) j = nlohmann::json::array();  // forțăm să fie array
+            if (!j.is_array()) j = nlohmann::json::array();
         } catch (...) {
-            j = nlohmann::json::array();  // dacă e corupt
+            j = nlohmann::json::array();
         }
         in.close();
     } else {
-        j = nlohmann::json::array();  // dacă fișierul nu există
+        j = nlohmann::json::array();
     }
 
-    // === Adăugăm cursul nou ===
     nlohmann::json cursJson = {
         {"stil", stil},
         {"ziSaptamana", zi},
@@ -109,7 +107,6 @@ void MeniuInstructor::adaugaCurs() {
         {"persoaneInscrise", 0}
     };
 
-
     j.push_back(cursJson);
 
     std::ofstream out("../cursuri.json");
@@ -118,7 +115,6 @@ void MeniuInstructor::adaugaCurs() {
     } else {
         std::cerr << "Eroare la deschiderea cursuri.json pentru scriere!\n";
     }
-
 
     std::cout << "\nCurs creat cu succes.\n";
 }
@@ -163,7 +159,6 @@ void MeniuInstructor::afiseazaCursuriCreate() {
 }
 
 void MeniuInstructor::stergeCurs() {
-    // Citim din JSON TOATE cursurile
     nlohmann::json j;
     std::ifstream in("../cursuri.json");
     if (!in.is_open()) {
@@ -176,7 +171,6 @@ void MeniuInstructor::stergeCurs() {
     std::string numeInstructor = utilizatorAutentificat->getNumeComplet();
     std::vector<nlohmann::json> cursuriInstructor;
 
-    // Selectăm doar cursurile instructorului curent
     for (const auto& curs : j) {
         if (curs["instructor"] == numeInstructor) {
             cursuriInstructor.push_back(curs);
@@ -188,7 +182,6 @@ void MeniuInstructor::stergeCurs() {
         return;
     }
 
-    // Afișăm cu index pentru instructor
     for (size_t i = 0; i < cursuriInstructor.size(); ++i) {
         std::cout << i + 1 << ". Stil: " << cursuriInstructor[i]["stil"]
                   << ", Zi: " << cursuriInstructor[i]["ziSaptamana"]
@@ -216,10 +209,8 @@ void MeniuInstructor::stergeCurs() {
         return;
     }
 
-    // Cursul de șters efectiv (din JSON original, nu din vectorul instructorului)
     nlohmann::json cursDeSters = cursuriInstructor[index - 1];
 
-    // Construim noul JSON fără acel curs
     nlohmann::json jNou = nlohmann::json::array();
     for (const auto& curs : j) {
         if (curs != cursDeSters) {
@@ -227,7 +218,6 @@ void MeniuInstructor::stergeCurs() {
         }
     }
 
-    // Suprascriem fișierul
     std::ofstream out("../cursuri.json");
     if (!out.is_open()) {
         std::cerr << "Eroare: nu pot deschide cursuri.json pentru scriere.\n";
@@ -254,7 +244,6 @@ void MeniuInstructor::stergeCont() {
         return;
     }
 
-    // Stergere din utilizatori.json
     std::ifstream in("../utilizatori.json");
     if (!in.is_open()) {
         std::cerr << "Eroare la deschiderea utilizatori.json\n";
@@ -275,7 +264,6 @@ void MeniuInstructor::stergeCont() {
             utilizatorDeSters = user;
     }
 
-    // Stergere cursuri asociate instructorului
     std::ifstream inC("../cursuri.json");
     if (inC.is_open()) {
         nlohmann::json jCursuri;

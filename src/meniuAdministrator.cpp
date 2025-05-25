@@ -77,7 +77,6 @@ void MeniuAdministrator::stergeUtilizator(std::vector<std::shared_ptr<Utilizator
     std::cout << "Parola: ";
     std::cin >> parola;
 
-    // Cauta utilizatorul si verifica parola
     auto it = std::find_if(utilizatori.begin(), utilizatori.end(),
         [&](const std::shared_ptr<Utilizator>& u) {
             return u->getEmail() == email && u->verificaParola(parola);
@@ -91,7 +90,6 @@ void MeniuAdministrator::stergeUtilizator(std::vector<std::shared_ptr<Utilizator
         return;
     }
 
-    // Confirmare stergere
     char confirmare;
     std::cout << "Esti sigur ca vrei sa stergi utilizatorul? (y/n): ";
     std::cin >> confirmare;
@@ -106,7 +104,6 @@ void MeniuAdministrator::stergeUtilizator(std::vector<std::shared_ptr<Utilizator
 
     utilizatori.erase(it);
 
-    // Stergere si din fisier JSON
     std::ifstream f("../utilizatori.json");
     if (!f.is_open()) {
         std::cerr << "Eroare: nu pot deschide utilizatori.json pentru citire!\n";

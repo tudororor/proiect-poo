@@ -1,2 +1,3 @@
-5
-11 22 33 44 55
+Cum proiectul meu este unul interactiv, nu pot introduce in acest fisier date comune.
+Totusi, se pot observa fisierele JSON, unde se stocheaza date din aplicatie, care au fost create prin intermediul proiectului.
+Pe langa crearea altor entitati prin intermediul aplicatiei, pentru a testa mai usor am pregatit deja in acele fisiere alte exemple.

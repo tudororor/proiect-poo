@@ -68,8 +68,9 @@ void Meniu::meniuPrincipal() {
 
 void Meniu::inregistrareUtilizator() {
     std::string path = "../utilizatori.json";
-    std::string nume, prenume, email, parola;
-    unsigned int varsta;
+    std::string nume, prenume, email, parola, inputVarsta, inputProfil;
+    unsigned int varsta, tipProfil = 0;
+    std::string tipProfilText;
 
     std::cout << "----- INREGISTRARE -----\n\n";
     std::cout << "Nume: ";
@@ -80,11 +81,14 @@ void Meniu::inregistrareUtilizator() {
     std::getline(std::cin >> std::ws, email);
     std::cout << "Parola: ";
     std::getline(std::cin >> std::ws, parola);
-    std::cout << "Varsta: ";
-    std::cin >> varsta;
 
-    int tipProfil = 0;
-    std::string tipProfilText;
+    std::cout << "Varsta: ";
+    std::getline(std::cin, inputVarsta);
+    while (!std::all_of(inputVarsta.begin(), inputVarsta.end(), ::isdigit) || inputVarsta.empty()) {
+        std::cout << "Varsta invalida. Introdu o valoare numerica: ";
+        std::getline(std::cin, inputVarsta);
+    }
+    varsta = static_cast<unsigned int>(std::stoi(inputVarsta));
 
     do {
         std::cout << "\nAlege tipul de profil:\n";
@@ -93,15 +97,22 @@ void Meniu::inregistrareUtilizator() {
         std::cout << "3. Administrator\n";
         std::cout << "4. InstructorAdministrator\n\n";
         std::cout << "Optiunea ta: ";
-        std::cin >> tipProfil;
+        std::getline(std::cin, inputProfil);
 
+        while (!std::all_of(inputProfil.begin(), inputProfil.end(), ::isdigit) || inputProfil.empty()) {
+            std::cout << "Input invalid. Introdu un numar valid (1-4): ";
+            std::getline(std::cin, inputProfil);
+        }
+
+        tipProfil = std::stoi(inputProfil);
         switch (tipProfil) {
             case 1: tipProfilText = "client"; break;
             case 2: tipProfilText = "instructor"; break;
             case 3: tipProfilText = "administrator"; break;
             case 4: tipProfilText = "instructor_administrator"; break;
-            default: std::cout << "Optiune invalida. Incearca din nou.\n";
+            default: tipProfil = 0;
         }
+        if (tipProfil == 0) std::cout << "Optiune invalida. Incearca din nou.\n";
     } while (tipProfil < 1 || tipProfil > 4);
 
     nlohmann::json j;
@@ -123,10 +134,20 @@ void Meniu::inregistrareUtilizator() {
     nlohmann::json utilizatorNou;
 
     if (tipProfil == 1) {
-        double sumaInitiala;
+        double sumaInitiala = 0;
+        std::string inputSuma;
         std::cout << "Introdu suma initiala din cont (lei): ";
-        std::cin >> sumaInitiala;
-        std::cin.ignore();
+        std::getline(std::cin, inputSuma);
+        while (true) {
+            try {
+                sumaInitiala = std::stod(inputSuma);
+                if (sumaInitiala < 0) throw std::invalid_argument("negativ");
+                break;
+            } catch (...) {
+                std::cout << "Suma invalida. Introdu un numar pozitiv: ";
+                std::getline(std::cin, inputSuma);
+            }
+        }
 
         auto client = std::make_shared<Client>(nume, prenume, email, parola, varsta);
         client->adaugaBani(sumaInitiala);

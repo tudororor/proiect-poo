@@ -1,18 +1,104 @@
 [
     {
-        "email": "sm",
+        "bani": 150.0,
+        "email": "pop@ion.ro",
+        "nrSedinte": 8,
+        "nume": "Popescu",
+        "parola": "parola123",
+        "prenume": "Ion",
+        "tip": "client",
+        "varsta": 21
+    },
+    {
+        "email": "bioana@m.com",
+        "nume": "Bursuc",
+        "parola": "1234",
+        "prenume": "Ioana",
+        "tip": "instructor",
+        "varsta": 24
+    },
+    {
+        "email": "andr@ionescu.ro",
+        "nume": "Ionescu",
+        "parola": "aionescu",
+        "prenume": "Andreea",
+        "tip": "administrator",
+        "varsta": 23
+    },
+    {
+        "email": "simona@mereu.ro",
         "nume": "Mereu",
-        "parola": "10",
+        "parola": "simereu",
         "prenume": "Simona",
+        "tip": "instructor_administrator",
+        "varsta": 30
+    },
+    {
+        "bani": 80.0,
+        "email": "dana.sandu@gmail.com",
+        "nrSedinte": 3,
+        "nume": "Sandu",
+        "parola": "danas123",
+        "prenume": "Dana",
+        "tip": "client",
+        "varsta": 27
+    },
+    {
+        "bani": 200.0,
+        "email": "maria.popa@yahoo.com",
+        "nrSedinte": 12,
+        "nume": "Popa",
+        "parola": "mariap",
+        "prenume": "Maria",
+        "tip": "client",
+        "varsta": 19
+    },
+    {
+        "email": "george.dance@studio.com",
+        "nume": "Cojocaru",
+        "parola": "george2024",
+        "prenume": "George",
+        "tip": "instructor",
+        "varsta": 28
+    },
+    {
+        "email": "roxi.balet@fit.ro",
+        "nume": "Iacob",
+        "parola": "roxibalet",
+        "prenume": "Roxana",
+        "tip": "instructor",
+        "varsta": 31
+    },
+    {
+        "email": "admin1@studio.ro",
+        "nume": "Tudor",
+        "parola": "adminpass",
+        "prenume": "Cristina",
         "tip": "administrator",
         "varsta": 35
     },
     {
-        "email": "0",
-        "nume": "0",
-        "parola": "0",
-        "prenume": "00",
+        "email": "superadmin@studio.ro",
+        "nume": "Marinescu",
+        "parola": "super2025",
+        "prenume": "Dan",
+        "tip": "administrator",
+        "varsta": 42
+    },
+    {
+        "email": "combo@fusion.ro",
+        "nume": "Barbu",
+        "parola": "combinat123",
+        "prenume": "Oana",
         "tip": "instructor_administrator",
-        "varsta": 0
+        "varsta": 33
+    },
+    {
+        "email": "dualrole@studio.ro",
+        "nume": "Enache",
+        "parola": "dual123",
+        "prenume": "Silviu",
+        "tip": "instructor_administrator",
+        "varsta": 29
     }
 ]
