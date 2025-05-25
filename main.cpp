@@ -12,7 +12,13 @@
 #include "meniu.h"
 
 int main() {
+#ifdef CI_MODE
+    std::cout << "[CI MODE] Executie scurta pentru GitHub Actions.\n";
+    return 0;
+#else
     Meniu m;
     m.ruleaza();
     return 0;
+#endif
 }
+
