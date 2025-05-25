@@ -7,7 +7,7 @@ Administrator::Administrator(const std::string& nume, const std::string& prenume
 
 void Administrator::afiseazaProfil() const {
 	std::cout << "Administrator: " << getNumeComplet()
-			  << ", " << getVarsta() << " ani" << std::endl;
+			  << "\n" << "Varsta: " << getVarsta() << std::endl;
 }
 
 Administrator::~Administrator() {

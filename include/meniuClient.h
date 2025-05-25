@@ -16,7 +16,9 @@ public:
 	void rezervaCurs();
 	void afiseazaRezervari();
 	void anuleazaRezervare();
-	void cumparaAbonament();
+	void cumparaSedinte();
+	void stergeCont();
+
 };
 
 #endif

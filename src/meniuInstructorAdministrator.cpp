@@ -1,42 +1,47 @@
-#include "../include/meniuInstructor.h"
+#include "meniuInstructorAdministrator.h"
 #include <iostream>
-#include <limits>
-#include <nlohmann/json.hpp>
 #include <fstream>
+#include <limits>
+#include <algorithm>
+#include <nlohmann/json.hpp>
 #include "../include/utilitare.h"
 
-MeniuInstructor::MeniuInstructor(std::shared_ptr<Utilizator> utilizator)
-    : utilizatorAutentificat(std::move(utilizator)) {}
+using json = nlohmann::json;
 
-void MeniuInstructor::meniuInstructor() {
+MeniuInstructorAdministrator::MeniuInstructorAdministrator(std::shared_ptr<Utilizator> utilizator,
+                                                           std::vector<std::shared_ptr<Utilizator>>& utilizatori)
+    : utilizatorAutentificat(utilizator), utilizatori(utilizatori) {}
+
+void MeniuInstructorAdministrator::meniuInstructorAdministrator() {
     int optiune;
     do {
         clearScreen();
-        std::cout << "----- MENIU INSTRUCTOR -----\n\n";
+        std::cout << "--- MENIU INSTRUCTOR + ADMIN ---\n\n";
         std::cout << "1. Creeaza curs\n";
         std::cout << "2. Sterge curs\n";
-        std::cout << "3. Afiseaza cursuri\n";
-        std::cout << "4. Sterge contul meu\n";  // NOU
-        std::cout << "5. Delogare\n\n";
-        std::cout << "Alege o optiune: ";
+        std::cout << "3. Afiseaza cursuri proprii\n";
+        std::cout << "4. Sterge propriul cont\n";
+        std::cout << "5. Afiseaza cont utilizator\n";
+        std::cout << "6. Sterge cont utilizator\n";
+        std::cout << "7. Delogare\n\n";
+        std::cout << "Alege optiunea: ";
         std::cin >> optiune;
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         clearScreen();
 
-        if (optiune == 1) adaugaCurs();
-        else if (optiune == 2) stergeCurs();
-        else if (optiune == 3) afiseazaCursuriCreate();
-        else if (optiune == 4) {
-            stergeCont();
-            return;  // revine la meniul principal
-        }
-        else if (optiune == 5) {
-            std::cout << "Delogare cu succes.\n";
-            return;
-        }
-        else {
-            std::cout << "Optiune invalida.\n";
+        switch (optiune) {
+            case 1: adaugaCurs(); break;
+            case 2: stergeCurs(); break;
+            case 3: afiseazaCursuriCreate(); break;
+            case 4: stergeCont(); return;
+            case 5: afiseazaUtilizatorDetaliat(); break;
+            case 6: stergeAltUtilizator(); break;
+            case 7:
+                std::cout << "Delogare cu succes.\n";
+                return;
+            default:
+                std::cout << "Optiune invalida.\n";
         }
 
         std::cout << "\nApasa ENTER pentru a continua...";
@@ -45,7 +50,9 @@ void MeniuInstructor::meniuInstructor() {
     } while (true);
 }
 
-void MeniuInstructor::adaugaCurs() {
+// ========== Instructor ==========
+
+void MeniuInstructorAdministrator::adaugaCurs() {
     std::string stil, zi;
     unsigned int ora = 0, durata = 0, capacitate = 0;
 
@@ -79,27 +86,21 @@ void MeniuInstructor::adaugaCurs() {
 
     std::string numeInstructor = utilizatorAutentificat->getNumeComplet();
 
-    Curs nouCurs(stil, zi, ora, durata, capacitate, numeInstructor);
-    cursuriCreate.push_back(nouCurs);
-
-    // === Citire din cursuri.json existente ===
-    nlohmann::json j;
-
+    json j;
     std::ifstream in("../cursuri.json");
     if (in.is_open()) {
         try {
             in >> j;
-            if (!j.is_array()) j = nlohmann::json::array();  // forțăm să fie array
+            if (!j.is_array()) j = json::array();
         } catch (...) {
-            j = nlohmann::json::array();  // dacă e corupt
+            j = json::array();
         }
         in.close();
     } else {
-        j = nlohmann::json::array();  // dacă fișierul nu există
+        j = json::array();
     }
 
-    // === Adăugăm cursul nou ===
-    nlohmann::json cursJson = {
+    json cursJson = {
         {"stil", stil},
         {"ziSaptamana", zi},
         {"ora", ora},
@@ -109,22 +110,20 @@ void MeniuInstructor::adaugaCurs() {
         {"persoaneInscrise", 0}
     };
 
-
     j.push_back(cursJson);
 
     std::ofstream out("../cursuri.json");
     if (out.is_open()) {
         out << j.dump(4);
+        out.close();
+        std::cout << "\nCurs creat cu succes.\n";
     } else {
         std::cerr << "Eroare la deschiderea cursuri.json pentru scriere!\n";
     }
-
-
-    std::cout << "\nCurs creat cu succes.\n";
 }
 
-void MeniuInstructor::afiseazaCursuriCreate() {
-    nlohmann::json j;
+void MeniuInstructorAdministrator::afiseazaCursuriCreate() {
+    json j;
     std::ifstream in("../cursuri.json");
     if (!in.is_open()) {
         std::cout << "Nu exista cursuri salvate.\n";
@@ -140,7 +139,7 @@ void MeniuInstructor::afiseazaCursuriCreate() {
     }
 
     std::string numeInstructor = utilizatorAutentificat->getNumeComplet();
-    std::vector<nlohmann::json> cursuriInstructor;
+    std::vector<json> cursuriInstructor;
 
     for (const auto& curs : j) {
         if (curs["instructor"] == numeInstructor) {
@@ -162,9 +161,8 @@ void MeniuInstructor::afiseazaCursuriCreate() {
     }
 }
 
-void MeniuInstructor::stergeCurs() {
-    // Citim din JSON TOATE cursurile
-    nlohmann::json j;
+void MeniuInstructorAdministrator::stergeCurs() {
+    json j;
     std::ifstream in("../cursuri.json");
     if (!in.is_open()) {
         std::cerr << "Eroare: nu pot deschide cursuri.json pentru citire.\n";
@@ -174,9 +172,8 @@ void MeniuInstructor::stergeCurs() {
     in.close();
 
     std::string numeInstructor = utilizatorAutentificat->getNumeComplet();
-    std::vector<nlohmann::json> cursuriInstructor;
+    std::vector<json> cursuriInstructor;
 
-    // Selectăm doar cursurile instructorului curent
     for (const auto& curs : j) {
         if (curs["instructor"] == numeInstructor) {
             cursuriInstructor.push_back(curs);
@@ -188,7 +185,6 @@ void MeniuInstructor::stergeCurs() {
         return;
     }
 
-    // Afișăm cu index pentru instructor
     for (size_t i = 0; i < cursuriInstructor.size(); ++i) {
         std::cout << i + 1 << ". Stil: " << cursuriInstructor[i]["stil"]
                   << ", Zi: " << cursuriInstructor[i]["ziSaptamana"]
@@ -197,7 +193,7 @@ void MeniuInstructor::stergeCurs() {
                   << ", Capacitate: " << cursuriInstructor[i]["capacitateMaxima"] << "\n";
     }
 
-    std::cout << "\nIntrodu indexul cursului pe care doriti sa il stergeti: ";
+    std::cout << "\nIntrodu indexul cursului de sters: ";
     int index;
     std::cin >> index;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -206,6 +202,7 @@ void MeniuInstructor::stergeCurs() {
         std::cout << "Index invalid.\n";
         return;
     }
+
     char confirmare;
     std::cout << "Esti sigur ca vrei sa stergi cursul? (y/n): ";
     std::cin >> confirmare;
@@ -216,30 +213,21 @@ void MeniuInstructor::stergeCurs() {
         return;
     }
 
-    // Cursul de șters efectiv (din JSON original, nu din vectorul instructorului)
-    nlohmann::json cursDeSters = cursuriInstructor[index - 1];
-
-    // Construim noul JSON fără acel curs
-    nlohmann::json jNou = nlohmann::json::array();
+    json cursDeSters = cursuriInstructor[index - 1];
+    json jNou = json::array();
     for (const auto& curs : j) {
-        if (curs != cursDeSters) {
+        if (curs != cursDeSters)
             jNou.push_back(curs);
-        }
     }
 
-    // Suprascriem fișierul
     std::ofstream out("../cursuri.json");
-    if (!out.is_open()) {
-        std::cerr << "Eroare: nu pot deschide cursuri.json pentru scriere.\n";
-        return;
-    }
     out << std::setw(4) << jNou;
     out.close();
 
     std::cout << "Curs sters cu succes.\n";
 }
 
-void MeniuInstructor::stergeCont() {
+void MeniuInstructorAdministrator::stergeCont() {
     std::string email = utilizatorAutentificat->getEmail();
 
     std::cout << "Esti sigur ca vrei sa stergi contul tau? (y/n): ";
@@ -254,19 +242,21 @@ void MeniuInstructor::stergeCont() {
         return;
     }
 
+    // Sterge din vector
+    auto it = std::remove_if(utilizatori.begin(), utilizatori.end(),
+        [&](const std::shared_ptr<Utilizator>& u) {
+            return u->getEmail() == email;
+        });
+    utilizatori.erase(it, utilizatori.end());
+
     // Stergere din utilizatori.json
     std::ifstream in("../utilizatori.json");
-    if (!in.is_open()) {
-        std::cerr << "Eroare la deschiderea utilizatori.json\n";
-        return;
-    }
-
-    nlohmann::json j;
+    json j;
     in >> j;
     in.close();
 
-    nlohmann::json jNou = nlohmann::json::array();
-    nlohmann::json utilizatorDeSters;
+    json jNou = json::array();
+    json utilizatorDeSters;
 
     for (const auto& user : j) {
         if (user["email"] != email)
@@ -275,28 +265,23 @@ void MeniuInstructor::stergeCont() {
             utilizatorDeSters = user;
     }
 
-    // Stergere cursuri asociate instructorului
+    std::string numeComplet = utilizatorDeSters["prenume"].get<std::string>() + " " +
+                              utilizatorDeSters["nume"].get<std::string>();
+
     std::ifstream inC("../cursuri.json");
     if (inC.is_open()) {
-        nlohmann::json jCursuri;
+        json jCursuri;
         inC >> jCursuri;
         inC.close();
 
-        std::string numeComplet = utilizatorDeSters["prenume"].get<std::string>() + " " +
-                                  utilizatorDeSters["nume"].get<std::string>();
-
-        nlohmann::json jNouCursuri = nlohmann::json::array();
+        json jNouCursuri = json::array();
         for (const auto& curs : jCursuri) {
-            if (curs["instructor"] != numeComplet) {
+            if (curs["instructor"] != numeComplet)
                 jNouCursuri.push_back(curs);
-            }
         }
 
         std::ofstream outC("../cursuri.json");
-        if (outC.is_open()) {
-            outC << std::setw(4) << jNouCursuri;
-            outC.close();
-        }
+        outC << std::setw(4) << jNouCursuri;
     }
 
     std::ofstream out("../utilizatori.json");
@@ -304,5 +289,85 @@ void MeniuInstructor::stergeCont() {
     out.close();
 
     std::cout << "Contul tau a fost sters cu succes.\n";
+    std::cin.get();
+}
+
+// ========== Administrator ==========
+
+void MeniuInstructorAdministrator::afiseazaUtilizatorDetaliat() {
+    std::string email;
+    std::cout << "Email: ";
+    std::cin >> email;
+
+    for (const auto& u : utilizatori) {
+        if (u->getEmail() == email) {
+            std::cout << "\nProfil gasit!\n";
+            u->afiseazaProfil();
+
+            std::cout << "\nApasa Enter pentru a continua...";
+            std::cin.ignore();
+            std::cin.get();
+            return;
+        }
+    }
+
+    std::cout << "Contul nu a fost gasit.\n";
+    std::cout << "\nApasa Enter pentru a continua...";
+    std::cin.ignore();
+    std::cin.get();
+}
+
+void MeniuInstructorAdministrator::stergeAltUtilizator() {
+    std::string email, parola;
+    std::cout << "Email utilizator de sters: ";
+    std::cin >> email;
+    std::cout << "Parola: ";
+    std::cin >> parola;
+
+    auto it = std::find_if(utilizatori.begin(), utilizatori.end(),
+        [&](const std::shared_ptr<Utilizator>& u) {
+            return u->getEmail() == email && u->verificaParola(parola);
+        });
+
+    if (it == utilizatori.end()) {
+        std::cout << "Email sau parola incorecta.\n";
+        std::cout << "\nApasa Enter pentru a continua...";
+        std::cin.ignore();
+        std::cin.get();
+        return;
+    }
+
+    char confirmare;
+    std::cout << "Esti sigur ca vrei sa stergi utilizatorul? (y/n): ";
+    std::cin >> confirmare;
+
+    if (confirmare != 'y' && confirmare != 'Y') {
+        std::cout << "Stergerea a fost anulata.\n";
+        std::cout << "\nApasa Enter pentru a continua...";
+        std::cin.ignore();
+        std::cin.get();
+        return;
+    }
+
+    utilizatori.erase(it);
+
+    std::ifstream f("../utilizatori.json");
+    json j;
+    f >> j;
+    f.close();
+
+    json jNou = json::array();
+    for (const auto& user : j) {
+        if (user["email"] != email || user["parola"] != parola)
+            jNou.push_back(user);
+    }
+
+    std::ofstream out("../utilizatori.json");
+    out << std::setw(4) << jNou;
+    out.close();
+
+    std::cout << "Utilizatorul a fost sters cu succes.\n";
+    std::cout << "\nApasa Enter pentru a continua...";
+    std::cin.ignore();
     std::cin.get();
 }

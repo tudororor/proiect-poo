@@ -1,13 +1,38 @@
 #include "client.h"
+#include <iostream>
 
 Client::Client(const std::string& nume, const std::string& prenume,
 			   const std::string& email, const std::string& parola,
 			   unsigned int varsta)
-	: Utilizator(nume, prenume, email, parola, varsta) {}
+		: Utilizator(nume, prenume, email, parola, varsta) {}
 
-void Client::afiseazaProfil() const {
-	std::cout << "Client: " << getNumeComplet() << ", " << getVarsta() << " ani\n";
+Client::Client(const std::string& nume, const std::string& prenume,
+			   const std::string& email, const std::string& parola,
+			   unsigned int varsta, double bani, unsigned int nrSedinte)
+		: Utilizator(nume, prenume, email, parola, varsta), bani(bani), nrSedinte(nrSedinte) {}
+
+// Constructor de copiere
+Client::Client(const Client& other)
+		: Utilizator(other), bani(other.bani), nrSedinte(other.nrSedinte) {}
+
+// Operator de atribuire
+Client& Client::operator=(const Client& other) {
+	if (this != &other) {
+		Utilizator::operator=(other); // apel la operator= din baza
+		bani = other.bani;
+		nrSedinte = other.nrSedinte;
+	}
+	return *this;
 }
+
+// Operator += pentru bani
+Client& Client::operator+=(double suma) {
+	bani += suma;
+	return *this;
+}
+
+// Destructor
+Client::~Client() = default;
 
 double Client::getBani() const {
 	return bani;
@@ -17,13 +42,30 @@ void Client::adaugaBani(double suma) {
 	bani += suma;
 }
 
-bool Client::scadeBani(double suma) {
-	if (bani >= suma) {
-		bani -= suma;
-		return true;
-	}
-	return false;
+void Client::scadeBani(double suma) {
+	if (suma <= bani) bani -= suma;
 }
 
-Client::~Client() {
+unsigned int Client::getNrSedinte() const {
+	return nrSedinte;
+}
+
+void Client::adaugaSedinte(unsigned int nr) {
+	nrSedinte += nr;
+}
+
+void Client::scadeSedinta() {
+	if (nrSedinte > 0) --nrSedinte;
+}
+
+void Client::afiseazaProfil() const {
+	std::cout << "Client: " << getNumeComplet() << "\n"
+			  << "Varsta: " << varsta << "\n"
+			  << "Bani: " << bani << " lei\n"
+			  << "Sedinte ramase: " << nrSedinte << "\n";
+}
+
+// Operator == (non-membru)
+bool operator==(const Client& c1, const Client& c2) {
+	return c1.email == c2.email;  // comparație logică
 }

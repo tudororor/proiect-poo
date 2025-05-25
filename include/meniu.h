@@ -1,6 +1,8 @@
 #ifndef MENIU_H
 #define MENIU_H
 #include <memory>
+#include <vector>
+
 #include "../include/utilizator.h"
 #include "../include/client.h"
 #include "../include/instructor.h"
@@ -9,6 +11,7 @@
 
 class Meniu {
 private:
+	std::vector<std::shared_ptr<Utilizator>> utilizatori;
 	std::shared_ptr<Utilizator> utilizatorAutentificat;
 
 public:
@@ -24,9 +27,9 @@ public:
 
 	void autentificareUtilizator();
 
-	void stergeUtilizator();
-
 	void delogare();
+
+	void citesteUtilizatoriDinJson();
 
 };
 

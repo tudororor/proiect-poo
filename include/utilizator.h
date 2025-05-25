@@ -15,6 +15,9 @@ public:
                unsigned int varsta = 0);
 
 	virtual void afiseazaProfil() const = 0;
+	bool verificaParola(const std::string& parolaIncercata) const {
+		return parola == parolaIncercata;
+	}
 
 	std::string getNumeComplet() const;
 	unsigned int getVarsta() const;

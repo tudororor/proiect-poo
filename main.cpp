@@ -17,7 +17,7 @@ int main() {
     return 0;
 #else
     Meniu m;
-    m.ruleaza();
+    m.meniuPrincipal();
     return 0;
 #endif
 }
